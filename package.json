@@ -1,0 +1,40 @@
+{
+  "name": "cowin-notifier",
+  "version": "1.0.0",
+  "description": "Get notified on your phone and computer when there is a vaccine slot available at your location, by running a script on your computer. ",
+  "author": "Divyansh Singh",
+  "private": false,
+  "scripts": {
+    "main": "cowin-notifier"
+  },
+  "dependencies": {
+    "date-fns": "^2.21.3",
+    "express": "^4.16.3",
+    "express-session": "^1.13.0",
+    "minimist": "^1.2.5",
+    "path": "^0.12.7",
+    "request": "^2.88.0",
+    "sound-play": "^1.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/divvu/cowin-notifier"
+  },
+  "bin": {
+    "cowin-notifier": "./app.js"
+  },
+  "keywords": [
+    "cowin",
+    "api",
+    "covid",
+    "appoitment",
+    "slot",
+    "vaccine",
+    "cheker",
+    "notification",
+    "pinger",
+    "automation",
+    "script"
+  ],
+  "license": "ISC"
+}
