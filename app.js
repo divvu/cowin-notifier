@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var request = require("request");
+const request = require("request");
 const argv = require('minimist')(process.argv.slice(2));
 const sound = require("sound-play");
 const path = require("path");
