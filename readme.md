@@ -11,10 +11,10 @@ Install [node](https://nodejs.org/en/download/), if not already installed. Then 
 
     npx cowin-pinger run --age=<YOUR-AGE> --district=<DISTRICT-ID> --dose=<DOSE-NO>
 
-    - Note: If you get below error:
-      'npx' is not recognized as an internal or external command, try running first.
+    Note: If you get below error:
+    'npx' is not recognized as an internal or external command, try running first.
       
-      npm i -g npx
+    npm i -g npx
       
 
 Replace the arguments above with the required values like mentioned below
