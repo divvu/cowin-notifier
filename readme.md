@@ -1,7 +1,7 @@
 #  COWIN VACCINE AVAILABILITY NOTIFIER
 Get notified on your phone and computer when there is a vaccine slot available at your location, by running a script on your computer. 
 
-As soon as any slot(s) is found based on prefrences an alert sound will be played on your computer and a message for the OTP by COWIN application will be sent to your mobile no. if provided to notify you.
+As soon as any slot(s) is found based on your prefrences, an alert sound will be played on your computer and if you provide your mobile no. as an optionl argument an OTP message by COWIN application will be sent to your mobile no. to notify you.
 
 ![Instructions-GIF](https://github.com/divvu/cowin-notifier/blob/main/img/instructions.gif)
 
