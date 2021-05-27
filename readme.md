@@ -9,7 +9,7 @@ As soon as any slot(s) is found based on your prefrences, an alert sound will be
 
 Install [node](https://nodejs.org/en/download/), if not already installed. Then run the following command:
 
-    npx cowin-pinger run --age=<YOUR-AGE> --district=<DISTRICT-ID> --dose=<DOSE-NO>
+    npx cowin-notifier run --age=<YOUR-AGE> --district=<DISTRICT-ID> --dose=<DOSE-NO>
 
     Note: If you get below error:
     'npx' is not recognized as an internal or external command, try running first.
