@@ -8,6 +8,16 @@ const notificationSound = path.join(__dirname, "alert-sound/beep.wav");
 var noOfAttempt = 0;
 var timeoutCount = 0;
 
+console.log(
+  `
+  #################################
+  ###      COWIN NOTIFIER       ###
+  ###      Version:  1.0.5      ###
+  ###   Author: Divyansh Singh  ###
+  #################################
+  `
+  );
+
 checkParams();
 
 function checkParams() {
@@ -34,7 +44,15 @@ function checkParams() {
         else if (argv.mob && argv.mob.toString().length !== 10) {
           console.error('mobile no. must be a 10 digit number \nRefer documentation for more details');
           return;
-        } 
+        }
+        else if ((argv.cost && typeof argv.cost !== 'string') || (argv.cost && argv.cost.toLowerCase() !== 'free' && argv.cost.toLowerCase() !== 'paid')){
+          console.error('Please provide cost param as FREE or PAID');
+          return;
+        }
+        else if ((argv.keep_searching && typeof argv.keep_searching !== 'string') || (argv.keep_searching && argv.keep_searching.toLowerCase() !== 'true' && argv.keep_searching.toLowerCase() !== 'false')){
+          console.error('Please provide keep_searching param as True or False');
+          return;
+        }
         else {            
             const params = {
                 vaccine: argv.vaccine, 
@@ -42,13 +60,16 @@ function checkParams() {
                 age: argv.age,
                 districtId: argv.district,
                 date: format(new Date(), 'dd-MM-yyyy'),
-                pin: argv.pin
+                pin: argv.pin,
+                cost: argv.cost,
+                keep_searching: argv.keep_searching
             }
             console.log('\nCowin vaccine availability notifier started succesfully\n');
             console.log(`Date = ${params.date}`);
             console.log(`Age = ${params.age}`);
             console.log(`Dose = ${params.dose === 1 ? 'First Dose' : 'Second Dose'}`);
             params.vaccine && console.log(`Vaccine = ${params.vaccine.toUpperCase()}`);
+            params.cost && console.log(`Cost = ${params.cost.toUpperCase()}`);
             if (params.pin) {
                 console.log(`Pincode = ${params.pin}`);
             } else {
@@ -83,12 +104,12 @@ var getOTP = function(){
 
 }
 
-function checkVaccineAvailabilty({ age, districtId, date, pin, vaccine, dose }){
+function checkVaccineAvailabilty({ age, districtId, date, pin, vaccine, dose, cost }){
   var availableCenters = {
     count: 0,
     centers: []
   };
-  const apiBaseUrl = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/'
+  const apiBaseUrl = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/'
   let url = pin ? `${apiBaseUrl}calendarByPin?pincode=${pin}&date=${date}` : `${apiBaseUrl}calendarByDistrict?district_id=${districtId}&date=${date}`
   let isSlotAvailable = false;
   var options = { 
@@ -110,18 +131,21 @@ function checkVaccineAvailabilty({ age, districtId, date, pin, vaccine, dose }){
           var session = center.sessions[j];
           if( session.min_age_limit <= age && session.available_capacity > 0){
             if( (dose === 1 && session.available_capacity_dose1 > 0) ||  (dose === 2 && session.available_capacity_dose2 > 0) ){
-              if( !vaccine || ( vaccine && vaccine.toLowerCase() !== session.vaccine.toLowerCase() ) ){
-                isSlotAvailable = true;
-                availableCenters.centers.push({
-                  name: center.name,
-                  address: center.address,
-                  fee_type: center.fee_type,
-                  date: session.date,
-                  available_capacity_dose1: session.available_capacity_dose1,
-                  available_capacity_dose2: session.available_capacity_dose2
-                });
-                availableCenters.district = center.district_name;
-                availableCenters.count++;
+              if( !vaccine || ( vaccine && vaccine.toLowerCase() == session.vaccine.toLowerCase() ) ){
+                if( !cost || ( cost && cost.toLowerCase() == center.fee_type.toLowerCase() ) ){
+                  isSlotAvailable = true;
+                  availableCenters.centers.push({
+                    name: center.name,
+                    address: center.address,
+                    cost: center.fee_type,
+                    date: session.date,
+                    available_capacity_dose1: session.available_capacity_dose1,
+                    available_capacity_dose2: session.available_capacity_dose2,
+                    vaccine: session.vaccine
+                  });
+                  availableCenters.district = center.district_name;
+                  availableCenters.count++;
+                }
               }
             }
           }
@@ -130,26 +154,27 @@ function checkVaccineAvailabilty({ age, districtId, date, pin, vaccine, dose }){
       if( isSlotAvailable == true ){
         console.log(`Slot(s) found at below centers with availabilty as of :  ${format( new Date(), "dd-MM-yyyy hh:mm:ss")}`);
         console.log(availableCenters);
-        notify();
+        notify( { age, districtId, date, pin, vaccine, dose, cost } );
       } 
       else {
         noOfAttempt++;
         console.log("fetching again.. attempt no. " + noOfAttempt);
-        setTimeout(() => { checkVaccineAvailabilty({ age, districtId, date, pin, vaccine, dose }) }, 30000); // call with 30 seconds delay.
+        setTimeout(() => { checkVaccineAvailabilty({ age, districtId, date, pin, vaccine, dose, cost }) }, 30000); // call with 30 seconds delay.
       } 
     }
     else{
       timeoutCount++;
       console.log("timeoutCount:", timeoutCount);
-      setTimeout(() => { checkVaccineAvailabilty({ age, districtId, date, pin, vaccine, dose }) }, 300000); // call with 5 mints delay.
+      setTimeout(() => { checkVaccineAvailabilty({ age, districtId, date, pin, vaccine, dose, cost }) }, 300000); // call with 5 mints delay.
     }
   })
 }
 
 
-notify = function (){
-  if(argv.mob) getOTP();
+notify = function ( { age, districtId, date, pin, vaccine, dose, cost } ){
   sound.play(notificationSound);
+  if(argv.mob) getOTP();
+  if(argv.keep_searching && argv.keep_searching.toLowerCase() == "true") setTimeout(() => { checkVaccineAvailabilty({ age, districtId, date, pin, vaccine, dose, cost }) }, 30000);
 }
 
  
