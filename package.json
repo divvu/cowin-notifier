@@ -1,6 +1,6 @@
 {
   "name": "cowin-notifier",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Get notified on your phone and computer when there is a vaccine slot available at your location, by running a script on your computer. ",
   "author": "Divyansh Singh",
   "private": false,
