@@ -3,6 +3,8 @@ Get notified on your phone and computer when there is a vaccine slot available a
 
 As soon as any slot(s) is found based on your prefrences, an alert sound will be played on your computer and if you provide your mobile no. as an optionl argument an OTP message by COWIN application will be sent to your mobile no. to notify you.
 
+Update: Now you can pass the parameter for vaccine cost type and keep searching even after any slot(s) is found.
+
 ![Instructions-GIF](https://github.com/divvu/cowin-notifier/blob/main/img/instructions.gif)
 
 ## GETTING STARTED
@@ -25,11 +27,14 @@ Replace the arguments above with the required values like mentioned below
 
   - Replace `<DOSE-NO>` with either 1 or 2 for first dose and second dose respectively.
 
+
 Optional arguments accepted:
 
   - Pass `--vaccine=<VACCINE-NAME>` to search for specific vaccine. Accepted values are `COVISHIELD` and `COVAXIN`.
   - Pass `--pin=<YOUR-AREA-PIN-CODE>` to search for availabe slots based on pin code. (`<DISTRICT-ID>` is not required and will be ignored if searching by PIN)
   - Pass `--mob=<YOUR-MOBILE-NUMBER>` to get COWIN OTP message on your phone when slot(s) found. (`<YOUR-MOBILE-NUMBER>` is not required and only alert sound will be played on your computer if not provided.)
+  - Pass `--cost=<FEE-TYPE>` to search for specific fee-type. Accepted values are `FREE` and `PAID`.
+  - Pass `--keep_searching=<KEEP-SEARCHING-FLAG>` to continue search even after slots are found. Accepted values are `TRUE` and `FALSE`. (default is FALSE)
 
   (Note: Search by District is recommended as searching by PINCODE will have lower chances of finding a slot)
 
@@ -991,7 +996,6 @@ Optional arguments accepted:
 
 ## Developer Todo 
 - Improve cli interface
-
 
 
 
