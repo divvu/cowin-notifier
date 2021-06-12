@@ -12,7 +12,7 @@ console.log(
   `
   #################################
   ###      COWIN NOTIFIER       ###
-  ###      Version:  1.0.5      ###
+  ###      Version:  1.0.7      ###
   ###   Author: Divyansh Singh  ###
   #################################
   `
