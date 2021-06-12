@@ -3,7 +3,7 @@ Get notified on your phone and computer when there is a vaccine slot available a
 
 As soon as any slot(s) is found based on your prefrences, an alert sound will be played on your computer and if you provide your mobile no. as an optionl argument an OTP message by COWIN application will be sent to your mobile no. to notify you.
 
-Update: Now you can pass the parameter for vaccine cost type and keep searching even after any slot(s) is found.
+**Update: Now you can pass the parameter for vaccine cost type and keep searching even after any slot(s) is found.**
 
 ![Instructions-GIF](https://github.com/divvu/cowin-notifier/blob/main/img/instructions.gif)
 
